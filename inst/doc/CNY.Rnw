@@ -1,0 +1,294 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsfonts,amstext,amsmath}
+\usepackage[authoryear,round,longnamesfirst]{natbib}
+\usepackage{graphicx,a4wide,color,ae,fancyvrb,thumbpdf}
+\usepackage{hyperref}
+
+%% instead of \usepackage{Sweave}
+\usepackage[T1]{fontenc}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
+\newenvironment{Schunk}{}{}
+\setkeys{Gin}{width=0.8\textwidth}
+\SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
+
+%% paragraphs
+\setlength{\parskip}{0.7ex plus0.1ex minus0.1ex}
+\setlength{\parindent}{0em}
+
+%% commands
+\newcommand{\ddquote}[1]{``#1''}
+\newcommand{\darrow}{\stackrel{\mbox{\tiny \textnormal{d}}}{\longrightarrow}}
+\newcommand{\parrow}{\stackrel{\mbox{\tiny \textnormal{p}}}{\longrightarrow}}
+\newcommand{\given}{\, | \,}
+\newcommand{\argmin}{\operatorname{argmin}\displaylimits}
+\newcommand{\efp}{\mathit{efp}}
+\newcommand{\nll}{\mathit{nll}}
+\newcommand{\NLL}{\mathit{NLL}}
+\let\proglang=\textsf
+\let\pkg=\textbf
+\let\code=\texttt
+
+\begin{document}
+
+\title{\bf Exchange Rate Regime Analysis for the Chinese Yuan}
+\author{Achim Zeileis \and Ajay Shah \and Ila Patnaik}
+\date{}
+\maketitle
+
+\begin{abstract}
+  We investigate the Chinese exchange rate regime after China gave up
+  on a fixed exchange rate to the US dollar in 2005. This reproduces
+  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2007}
+  initiated by \cite{fxr:Shah+Zeileis+Patnaik:2005}. Please refer
+  to these papers for a more detailed discussion.
+\end{abstract}
+
+%\VignetteIndexEntry{Exchange Rate Regime Analysis for the Chinese Yuan}
+%\VignetteDepends{graphics, stats, zoo, sandwich, strucchange}
+%\VignetteKeywords{CNY, foreign exchange rates, monitoring, dating}
+%\VignettePackage{fxregime}
+
+
+<<cleanup, echo=FALSE>>=
+cleanup <- TRUE
+@
+
+\section{Analysis}
+
+Exchange rate regime analysis is based on a linear regression model
+for cross-currency returns. A large data set derived from exchange
+rates available online from the US Federal Reserve
+at \url{http://www.federalreserve.gov/releases/h10/Hist/} is
+provided in the \code{FXRatesCHF} data set in \pkg{fxregime}.
+It is a ``\code{zoo}'' series containing 25 daily time series from
+1971-01-04 to 2006-11-29. The columns correspond to the prices for various
+currencies (in ISO 4217 format) with respect to CHF as the unit currency.
+
+<<preliminaries>>=
+library("fxregime")
+data("FXRatesCHF", package = "fxregime")
+@
+
+In the following, we investigate the exchange rate regime for the
+Chinese yuan CNY which was fixed to the US dollar USD in the years leading
+up to mid-2005. In July 2005, China announced a small appreciation of CNY,
+and, in addition, a reform of the exchange rate regime.  The People's
+Bank of China (PBC) announced this reform to involve a shift away from
+the fixed exchange rate to a basket of currencies with greater
+flexibility. In August 2005, PBC also announced that USD, JPY, EUR and KRW
+would be the currencies in this basket. Further currencies announced to be
+of interest are GBP, MYR, Singapore dollar, RUB, AUD,
+THB and CAD.
+
+Despite the announcements of the PBC, little evidence could be found for China moving
+away from a USD peg in the months after July 2005 \citep{fxr:Shah+Zeileis+Patnaik:2005}.
+To begin our investigation here, we follow up on our own analysis from autumn 2005: Using
+daily returns for the first three months after the announcement, we establish a stable exchange
+regression and monitor it in the subsequent months.
+The currencies considered by \cite{fxr:Zeileis+Shah+Patnaik:2007}
+are the four first-tier currencies announced (USD, JPY, EUR, KRW)
+as well two further currencies (GBP, MYR). The returns can be extracted from \code{FXRatesCHF} 
+and pre-processed via
+
+<<cny-data>>=
+cny <- fxreturns("CNY", frequency = "daily",
+  start = as.Date("2005-07-25"), end = as.Date("2007-06-07"),
+  other = c("USD", "JPY", "EUR", "GBP", "KRW", "MYR"), data = FXRatesCHF)
+@
+
+In a first step, we fit the exchange regression for these
+first three months after the announcements of the PBC.
+
+<<cny-fitting>>=
+cny_lm <- fxlm(CNY ~ USD + JPY + EUR + GBP + KRW + MYR,
+  data = window(cny, end = as.Date("2005-10-31")))
+summary(cny_lm)
+@
+
+Only the USD coefficient differing significantly from 0 (but not significantly
+from 1), thus signalling a very clear USD peg. The $R^2$ of the regression is
+\Sexpr{round(100 * summary(cny_lm)$r.squared, digits = 1)}\% due to the extremely 
+low standard deviation of $\sigma = \Sexpr{round(sqrt(tail(coef(cny_lm), 1)), digits = 3)}$.
+(Note that we use the un-adjusted estimate of $\sigma$, rather than the adjusted
+version reported in the \code{summary()} above.)
+
+To capture the fluctuation in the parameters during this history period, we compute
+the associated empirical fluctuation process
+
+<<cny-testing>>=
+cny_efp <- gefp(cny_lm, fit = NULL)
+@
+
+that can be visualized (along with the boundaries for the double maximum test) by
+
+<<cny-hprocess, eval=FALSE>>=
+plot(cny_efp, aggregate = FALSE, ylim = c(-1.85, 1.85))
+@
+
+\setkeys{Gin}{width=\textwidth}
+\begin{figure}[p]
+\begin{center}
+<<cny-hprocess1, fig=TRUE, height=11.3, width=9, echo=FALSE>>=
+<<cny-hprocess>>
+@
+\caption{\label{fig:cny-hprocess} Historical fluctuation process for CNY exchange rate regime.}
+\end{center}
+\end{figure}
+
+Figure~\ref{fig:cny-hprocess} shows that the fluctuation in the parameters during
+this history period is very small and non-significant:
+
+<<cny-sctest>>=
+sctest(cny_efp)
+@
+
+The same fluctuation process can be continued in the monitoring period to check
+whether future observations still conform with the established model. Using a linear
+boundary, derived at 5\% significance level (for monitoring up to $T = 4$), this
+can be performed via
+
+<<cny-monitoring, eval=FALSE>>=
+cny_mon <- fxmonitor(CNY ~ USD + JPY + EUR + GBP + KRW + MYR,
+  data = window(cny, end = as.Date("2006-05-31")),
+  start = as.Date("2005-11-01"), end = 4)
+plot(cny_mon, aggregate = FALSE)
+@
+
+\setkeys{Gin}{width=\textwidth}
+\begin{figure}[p]
+\begin{center}
+<<cny-mprocess, fig=TRUE, height=11.3, width=9, echo=FALSE>>=
+<<cny-monitoring>>
+@
+\caption{\label{fig:cny-mprocess} Monitoring fluctuation process for CNY exchange rate regime.}
+\end{center}
+\end{figure}
+
+yielding the visualization in Figure~\ref{fig:cny-mprocess}.
+In the first months, up to spring 2006, there is still
+moderate fluctuation in all processes signalling no departure from the previously established
+USD peg. In fact, the only larger deviation during that time period is surprisingly a \emph{decrease} in the
+variance---corresponding to a somewhat tighter USD peg---which almost leads to a boundary
+crossing in January 2006. However, the situation relaxes a bit before in the next weeks before in
+March 2006 several components of the fluctuation process start to deviate clearly from their mean: The largest 
+deviation is in the variance, slightly smaller deviations can be seen for the USD and
+MYR coefficients. Note that the USD coefficient, corresponding to its weight in the currency
+basket, decreases while the MYR coefficient increases. The earliest crossing is for the MYR
+coefficient (that starts to deviate a bit earlier than the other two parameters) in
+
+<<cny-monitorbreak>>=
+cny_mon
+@
+
+To capture the changes in the China's exchange rate regime more formally, we fit a segmented
+exchange rate regression based on the full extended data set:
+
+<<cny-dating, eval=FALSE>>=
+cny_reg <- fxregimes(CNY ~ USD + JPY + EUR + GBP + KRW + MYR,
+  data = cny, h = 20, breaks = 10)
+@
+
+<<cny-dating1, echo=FALSE>>=
+if(file.exists("cny_reg.rda")) load("cny_reg.rda") else {
+<<cny-dating>>
+save(cny_reg, file = "cny_reg.rda")
+}
+if(cleanup) file.remove("cny_reg.rda")
+@
+
+
+We determine the optimal breakpoints for $1, \dots, 10$ breaks with a minimal segment
+size of $20$ observations and compute the associated segmented negative log-likelihood
+(NLL) and LWZ criterion. Both can be visualized via
+
+<<cny-breaks, eval=FALSE>>=
+plot(cny_reg)
+@
+
+\setkeys{Gin}{width=0.75\textwidth}
+\begin{figure}[t]
+\begin{center}
+<<cny-breaks1, fig=TRUE, height=5, width=6, echo=FALSE>>=
+<<cny-breaks>>
+@
+\caption{\label{fig:cny-breaks} Negative log-likelihood and LWZ information
+  criterion for CNY exchange rate regimes.}
+\end{center}
+\end{figure}
+
+NLL decreases with every additional break but with a marked decrease only for going from 0
+to 1~break. This is also reflected in the LWZ criterion that assumes its minimum for 1~break
+so that we choose a 1-break (or 2-segment) model.
+The estimated breakpoint is \Sexpr{breakdates(cny_reg)}, i.e., just one day before
+the boundary crossing in the monitoring procedure, confirming the findings above. The associated
+parameter estimates can be obtained by
+
+<<cny-coef>>=
+coef(cny_reg)
+@
+
+A complete summary can be computed by first re-fitting the model on both sub-samples
+(returning a list of ``\code{fxlm}'' objects) and then applying the usual \code{summary()}:
+
+<<cny-refit>>=
+cny_rf <- refit(cny_reg)
+lapply(cny_rf, summary)
+@
+
+These results allow
+for several conclusions about the Chinese exchange rate regime after spring 2006: 
+CNY is still closely linked to USD. The exchange rate regime got much
+more flexible increasing from $\sigma = \Sexpr{round(sqrt(tail(coef(cny_rf[[1]]), 1)), digits = 3)}$
+to $\Sexpr{round(sqrt(tail(coef(cny_rf[[2]]), 1)), digits = 3)}$ which is still very low, even
+compared with other pegged exchange rate regimes (see results below for India). The intercept
+is significantly smaller than 0, reflecting a slow appreciation of the CNY. There
+is some small but significant weight on KRW and MYR, however no weight at all in the other
+currencies JPY, EUR and GBP. Unfortunately, there is a small deviation from a plain USD peg
+also in the first period before spring 2006. The reason is that the change in the MYR coefficient
+occurs slightly earlier than for the USD coefficient and the variance $\sigma^2$. Nevertheless,
+the change is captured well enough for practical purposes (albeit not completely perfect) in a
+2-segment model signalling a modest liberation of the rigid USD peg in spring 2006.
+
+
+\section{Summary} \label{sec:summary}
+
+For the Chinese yuan, a 2-segment model is found for the time after
+July 2005 when China gave up on a fixed exchange rate to the
+USD. While being still closely linked to USD in both periods, there
+has been a small step in the direction of the claims of the Chinese
+central bank: flexibility slightly increased while the weight of the
+USD in the currency basket slightly decreased.
+
+\begin{thebibliography}{2}
+\newcommand{\enquote}[1]{``#1''}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{Shah \emph{et~al.}(2005)Shah, Zeileis, and
+  Patnaik}]{fxr:Shah+Zeileis+Patnaik:2005}
+Shah A, Zeileis A, Patnaik I (2005).
+\newblock \enquote{What is the New Chinese Currency Regime?}
+\newblock \emph{Report~23}, Department of Statistics and Mathematics,
+  Wirtschaftsuniversit\"at Wien, Research Report Series.
+\newblock
+  \urlprefix\url{http://epub.wu-wien.ac.at/}.
+
+\bibitem[{Zeileis \emph{et~al.}(2007)Zeileis, Shah, and
+  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2007}
+Zeileis A, Shah A, Patnaik I (2007).
+\newblock \enquote{Exchange Rate Regime Analysis Using Structural Change
+  Methods.}
+\newblock \emph{Report~56}, Department of Statistics and Mathematics,
+  Wirtschaftsuniversit\"at Wien, Research Report Series.
+\newblock \urlprefix\url{http://epub.wu-wien.ac.at/}.
+\end{thebibliography}
+
+\end{document}

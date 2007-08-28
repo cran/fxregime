@@ -1,0 +1,51 @@
+import("stats", "graphics", "zoo", "sandwich", "strucchange", "car")
+
+export(
+  "fxreturns",
+  "fxlm",
+  "fxregimes",
+  "fxmonitor",
+  "fxpegtest",
+  "refit")
+
+## methods for class "fxlm"
+S3method("coef", "fxlm")
+S3method("estfun", "fxlm")
+S3method("index", "fxlm")
+S3method("time", "fxlm")
+S3method("linear.hypothesis", "fxlm")
+
+## methods for class "fxregimes"
+S3method("print", "fxregimes")
+S3method("refit", "fxregimes")
+S3method("coef", "fxregimes")
+S3method("fitted", "fxregimes")
+S3method("residuals", "fxregimes")
+S3method("lines", "fxregimes")
+S3method("index", "fxregimes")
+S3method("time", "fxregimes")
+
+## methods for class "fxmonitor"
+S3method("print", "fxmonitor")
+S3method("plot", "fxmonitor")
+S3method("breakpoints", "fxmonitor")
+S3method("breakdates", "fxmonitor")
+
+## methods for classes "gbreakpoints" and "gbreakpointsfull"
+## (gbreakpoints and nloglik are currently unexported)
+S3method("print", "gbreakpoints")
+S3method("breakdates", "gbreakpoints")
+S3method("summary", "gbreakpoints")
+S3method("logLik", "gbreakpoints")
+S3method("AIC", "gbreakpoints")
+S3method("confint", "gbreakpoints")
+
+S3method("breakpoints", "gbreakpointsfull")
+S3method("summary", "gbreakpointsfull")
+S3method("plot", "gbreakpointsfull")
+S3method("logLik", "gbreakpointsfull")
+S3method("AIC", "gbreakpointsfull")
+
+S3method("plot", "summary.gbreakpointsfull")
+S3method("print", "summary.gbreakpointsfull")
+
