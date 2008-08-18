@@ -2,6 +2,7 @@
 \alias{fxlm}
 \alias{coef.fxlm}
 \alias{estfun.fxlm}
+\alias{bread.fxlm}
 \alias{time.fxlm}
 \alias{index.fxlm}
 
@@ -45,10 +46,10 @@ An object of class \code{"fxlm"} inheriting from \code{"lm"}.
   Currency Regime?, Report 23, Department of Statistics and Mathematics,
   Wirtschaftsuniversitaet Wien, Research Report Series, November 2005.
 
-  Zeileis A., Shah A., Patnaik I. (2007), Exchange Rate Regime Analysis
-  Using Structural Change Methods, Report 56, Department of Statistics
+  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
+  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
   and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2007.
+  August 2008.
 }
 
 \seealso{\code{\link[stats]{lm}}, \code{\link[fxregime]{fxregimes}}}
@@ -62,10 +63,10 @@ data("FXRatesCHF", package = "fxregime")
 ## for one year after abolishing fixed USD regime
 cny <- fxreturns("CNY", frequency = "daily",
   start = as.Date("2005-07-25"), end = as.Date("2006-07-24"),
-  other = c("USD", "JPY", "EUR", "GBP", "KRW", "MYR"))
+  other = c("USD", "JPY", "EUR", "GBP"))
 
 ## estimate full-sample exchange rate regression
-fm <- fxlm(CNY ~ USD + JPY + EUR + GBP + KRW + MYR, data = cny)
+fm <- fxlm(CNY ~ USD + JPY + EUR + GBP, data = cny)
 coef(fm)
 summary(fm)
 

@@ -1,3 +1,19 @@
+Changes in Version 0.2-0
+
+  o Added a confint() method for "fxregimes" objects. For this,
+    a bread() method for "fxlm" objects was added and the results
+    of the estfun() method were rescaled.   
+
+  o Second CRAN version of the "fxregime" package, accompanying
+    Report 70, http://epub.wu-wien.ac.at/. This is an updated
+    version of Report 56, using an extended data period and
+    slightly modified currency baskets but leading to qualitatively
+    similar results.
+    
+  o The vignettes for CNY and INR have been updated to reproduce
+    Report 70, rather than 56.
+
+
 Changes in Version 0.1-0
 
   o First CRAN version of the "fxregime" package, accompanying
@@ -6,5 +22,4 @@ Changes in Version 0.1-0
 
 Changes in version 0.0-1
 
-  o first version of the package
-  
+  o first Version of the package

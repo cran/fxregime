@@ -81,10 +81,10 @@ An object of class \code{"fxmonitor"} which is a list including components:
   Currency Regime?, Report 23, Department of Statistics and Mathematics,
   Wirtschaftsuniversitaet Wien, Research Report Series, November 2005.
 
-  Zeileis A., Shah A., Patnaik I. (2007), Exchange Rate Regime Analysis
-  Using Structural Change Methods, Report 56, Department of Statistics
+  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
+  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
   and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2007.
+  August 2008.
 }
 
 \seealso{\code{\link[fxregime]{fxlm}}, \code{\link[fxregime]{fxregimes}}}
@@ -98,10 +98,10 @@ data("FXRatesCHF", package = "fxregime")
 ## for one year after abolishing fixed USD regime
 cny <- fxreturns("CNY", frequency = "daily",
   start = as.Date("2005-07-25"), end = as.Date("2006-07-24"),
-  other = c("USD", "JPY", "EUR", "GBP", "KRW", "MYR"))
+  other = c("USD", "JPY", "EUR", "GBP"))
 
 ## monitor CNY regression as in Shah et al. (2005)
-mon <- fxmonitor(CNY ~ USD + JPY + EUR + GBP + KRW + MYR,
+mon <- fxmonitor(CNY ~ USD + JPY + EUR + GBP,
   data = cny, start = as.Date("2005-11-01"))
 mon
 

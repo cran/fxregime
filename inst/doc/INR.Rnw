@@ -39,16 +39,20 @@
 
 \begin{abstract}
   We investigate the Indian exchange rate regime starting from 1993
-  when trading in the Indian rupee began. This reproduces
-  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2007} which
+  when trading in the Indian rupee began up to the end of 2007. This reproduces
+  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2008} which
   includes a more detailed discussion.
 \end{abstract}
 
 %\VignetteIndexEntry{Exchange Rate Regime Analysis for the Indian Rupee}
 %\VignetteDepends{graphics, stats, zoo, sandwich, strucchange}
-%\VignetteKeywords{INR, foreign exchange rates, monitoring, dating}
+%\VignetteKeywords{INR, foreign exchange rates, structural change, dating}
 %\VignettePackage{fxregime}
 
+
+<<cleanup, echo=FALSE>>=
+cleanup <- TRUE
+@
 
 \section{Analysis}
 
@@ -57,14 +61,15 @@ for cross-currency returns. A large data set derived from exchange
 rates available online from the US Federal Reserve
 at \url{http://www.federalreserve.gov/releases/h10/Hist/} is
 provided in the \code{FXRatesCHF} data set in \pkg{fxregime}.
-It is a ``\code{zoo}'' series containing 25 daily time series from
-1971-01-04 to 2006-11-29. The columns correspond to the prices for various
-currencies (in ISO 4217 format) with respect to CHF as the unit currency.
 
 <<preliminaries>>=
 library("fxregime")
 data("FXRatesCHF", package = "fxregime")
 @
+
+It is a ``\code{zoo}'' series containing \Sexpr{ncol(FXRatesCHF)} daily time series from
+\Sexpr{start(FXRatesCHF)} to \Sexpr{end(FXRatesCHF)}. The columns correspond to the prices for various
+currencies (in ISO 4217 format) with respect to CHF as the unit currency.
 
 India is an expanding economy with a currency that has been receiving increased
 interest over the last years. India is in the process of evolving
@@ -72,9 +77,9 @@ away from a closed economy towards a greater integration with the
 world on both the current account and the capital account. This has
 brought considerable stress upon the pegged exchange rate regime.
 Therefore, we try to track the evolution of the INR exchange rate regime since trading
-in the INR began in about 1993. The currency basket employed consists of
-the most important floating currencies (USD, JPY, EUR, GBP) as well as two
-further important Asian currencies (KRW, MYR). Because EUR can only be used for the time
+in the INR began in about 1993 up to the end of 2007. The currency basket employed consists of
+the most important floating currencies (USD, JPY, EUR, GBP).
+Because EUR can only be used for the time
 after its introduction as official euro-zone currency in 1999, we employ
 the exchange rates of the German mark (DEM, the most important currency in the EUR zone)
 adjusted to EUR rates. The combined returns are denoted DUR below in \code{FXRatesCHF}:
@@ -82,8 +87,8 @@ adjusted to EUR rates. The combined returns are denoted DUR below in \code{FXRat
 
 <<inr-data>>=
 inr <- fxreturns("INR", frequency = "weekly",
-  start = as.Date("1993-04-01"), end = as.Date("2007-06-07"),
-  other = c("USD", "JPY", "DUR", "GBP", "KRW", "MYR"), data = FXRatesCHF)
+  start = as.Date("1993-04-01"), end = as.Date("2008-01-04"),
+  other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCHF)
 @
 
 Weekly rather than daily returns are employed to reduce
@@ -95,7 +100,7 @@ there is not a single stable regime and to gain some exploratory insights from t
 associated fluctuation process. 
 
 <<inr-fitting>>=
-inr_lm <- fxlm(INR ~ USD + JPY + DUR + GBP + KRW + MYR, data = inr)
+inr_lm <- fxlm(INR ~ USD + JPY + DUR + GBP, data = inr)
 @
 
 As we do not expect to be able to draw valid conclusions
@@ -109,9 +114,9 @@ plot(inr_efp, aggregate = FALSE, ylim = c(-1.85, 1.85))
 @
 
 \setkeys{Gin}{width=\textwidth}
-\begin{figure}[p]
+\begin{figure}[t!]
 \begin{center}
-<<inr-hprocess, fig=TRUE, height=11.3, width=9, echo=FALSE>>=
+<<inr-hprocess, fig=TRUE, height=9, width=9, echo=FALSE>>=
 <<inr-testing>>
 @
 \caption{\label{fig:inr-hprocess} Historical fluctuation process for INR exchange rate regime.}
@@ -146,41 +151,23 @@ To capture this exploratory assessment in a formal way, a dating procedure is co
 for $1, \dots, 10$ breaks and a minimal segment size of $20$ observations. 
 
 <<inr-dating, eval=FALSE>>=
-nll <- function(x) -logLik(x)
-inr_reg <- fxregimes(INR ~ USD + JPY + DUR + GBP + KRW + MYR,
-  data = inr, h = 20, breaks = 10, objfun = nll)
+inr_reg <- fxregimes(INR ~ USD + JPY + DUR + GBP,
+  data = inr, h = 20, breaks = 10)
 @
 
-Using the negative log-likelihood (NLL) as the objective function would be the default
-in \code{fxregime()} anyway, however using a more efficient algorithm (based on
-recursive residuals). This algorithm can only be applied if there are no collinearities
-in the regressors on every conceivable sub-sample. As this is not the case for some
-of the currencies under consideration (MYR was closely pegged to USD), a less 
-efficient algorithm needs to be used. As this is too slow to be executed daily on
-various platforms in CRAN's automatic package checks, we include some results from the
-segmentation as a binary file in this package. The binary file is contains the \code{summary()}
-of the regimes and a list of re-fitted list of ``\code{fxlm}'' objects for each of
-the established sub-samples.
-
-<<inr-intermediate, eval=FALSE>>=
-inr_sreg <- summary(inr_reg)
-inr_rf <- refit(inr_reg)
-save(inr_sreg, inr_rf, file = "inr_reg.rda")
+<<inr-dating1, echo=FALSE>>=
+if(file.exists("inr_reg.rda")) load("inr_reg.rda") else {
+<<inr-dating>>
+save(inr_reg, file = "inr_reg.rda")
+}
+if(cleanup) file.remove("inr_reg.rda")
 @
 
-You can reproduce this file by executing the code printed here, but be aware that this
-can take a few hours (depending on your machine). Alternatively, you can continue
-with the our pre-computed results by
-
-<<inr-load>>=
-load("inr_reg.rda")
-@
-
-and then study the summary of the estimated exchange rate regimes for INR. The natural
-first step is to look at
+The associated segmented negative log-likelihood
+(NLL) and LWZ criterion. Both can be visualized via
 
 <<inr-breaks, eval=FALSE>>=
-plot(inr_sreg)
+plot(inr_reg)
 @
 
 \setkeys{Gin}{width=0.75\textwidth}
@@ -194,17 +181,30 @@ plot(inr_sreg)
 \end{center}
 \end{figure}
 
-producing Figure~\ref{fig:inr-breaks}. NLL is decreasing quickly up to $3$ breaks with a kink
-in the slope afterwards. Similarly, LWZ takes its minimum for $3$ breaks, choosing
-a 4-segment model. The corresponding parameter estimates can be queried
-from the re-fitted models.
+producing Figure~\ref{fig:inr-breaks}. NLL is decreasing quickly up to
+$\Sexpr{length(breakdates(inr_reg))}$ breaks with a kink
+in the slope afterwards. Similarly, LWZ takes its minimum for
+$\Sexpr{length(breakdates(inr_reg))}$ breaks, choosing
+a \Sexpr{length(breakdates(inr_reg))+1}-segment model.
+The confidence intervals corresponding to the breaks can be
+obtained by
+
+<<inr-confint>>=
+confint(inr_reg, level = 0.9)
+@
+
+showing that the start/end of segments with low variance can
+be determined more precisely than for segments with high variance.
+
+The parameter estimates for all segments can be queried via
 
 <<inr-coef>>=
-t(sapply(inr_rf, coef))
+coef(inr_reg)
 @
 
 The most striking observation from the segmented coefficients is that
-INR was closely pegged to USD up to March 2004 when it shifted to a
+INR was closely pegged to USD up to 
+\Sexpr{tail(breakdates(inr_reg), 1)} when it shifted to a
 basket peg in which USD has still the highest weight but considerably
 less than before.  Furthermore, the changes in $\sigma$ are
 remarkable, roughly matching the exploratory observations from the
@@ -225,13 +225,14 @@ period, reserves in excess of 20\% of GDP were held by the RBI, and a
 modest pace of reserves accumulation has continued.
 
 <<inr-coef>>=
+inr_rf <- refit(inr_reg)
 lapply(inr_rf, summary)
 @
 
 
 \section{Summary} \label{sec:summary}
 
-For the Indian rupee, a 4-segment
+For the Indian rupee, a \Sexpr{length(breakdates(inr_reg))+1}-segment
 model is found with a close linkage of INR to USD in the first three
 periods (with tight/flexible/tight pegging, respectively) before
 moving to a more flexible basket peg in spring 2004.
@@ -255,14 +256,12 @@ basket peg in operation.
   \urlstyle{rm}\Url}\fi
 \providecommand{\eprint}[2][]{\url{#2}}
 
-\bibitem[{Shah \emph{et~al.}(2005)Shah, Zeileis, and
-  Patnaik}]{fxr:Shah+Zeileis+Patnaik:2005}
-\bibitem[{Zeileis \emph{et~al.}(2007)Zeileis, Shah, and
-  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2007}
-Zeileis A, Shah A, Patnaik I (2007).
-\newblock \enquote{Exchange Rate Regime Analysis Using Structural Change
-  Methods.}
-\newblock \emph{Report~56}, Department of Statistics and Mathematics,
+\bibitem[{Zeileis \emph{et~al.}(2008)Zeileis, Shah, and
+  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2008}
+Zeileis A, Shah A, Patnaik I (2008).
+\newblock \enquote{Testing, Monitoring, and Dating Structural Changes
+  in Maximum Likelihood Models.}
+\newblock \emph{Report~70}, Department of Statistics and Mathematics,
   Wirtschaftsuniversit\"at Wien, Research Report Series.
 \newblock \urlprefix\url{http://epub.wu-wien.ac.at/}.
 \end{thebibliography}

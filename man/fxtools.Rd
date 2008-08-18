@@ -32,10 +32,10 @@ currencies have coefficient \code{0}.
   Currency Regime?, Report 23, Department of Statistics and Mathematics,
   Wirtschaftsuniversitaet Wien, Research Report Series, November 2005.
 
-  Zeileis A., Shah A., Patnaik I. (2007), Exchange Rate Regime Analysis
-  Using Structural Change Methods, Report 56, Department of Statistics
+  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
+  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
   and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2007.
+  August 2008.
 }
 
 \seealso{\code{\link[fxregime]{fxlm}}, \code{\link[fxregime]{fxregimes}}}
@@ -49,10 +49,10 @@ data("FXRatesCHF", package = "fxregime")
 ## after abolishing fixed USD regime until end of 2005
 cny <- fxreturns("CNY", frequency = "daily",
   start = as.Date("2005-07-25"), end = as.Date("2005-12-31"),
-  other = c("USD", "JPY", "EUR", "GBP", "KRW", "MYR"))
+  other = c("USD", "JPY", "EUR", "GBP"))
 
-## estimate full-sample Frankel-Wei model
-fm <- fxlm(CNY ~ USD + JPY + EUR + GBP + KRW + MYR, data = cny)
+## estimate full-sample exchange rate regression model
+fm <- fxlm(CNY ~ USD + JPY + EUR + GBP, data = cny)
 
 ## check for plain USD peg:
 if(require("car")) fxpegtest(fm)

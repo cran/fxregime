@@ -11,11 +11,12 @@ export(
 ## methods for class "fxlm"
 S3method("coef", "fxlm")
 S3method("estfun", "fxlm")
+S3method("bread", "fxlm")
 S3method("index", "fxlm")
 S3method("time", "fxlm")
 S3method("linear.hypothesis", "fxlm")
 
-## methods for class "fxregimes"
+## methods for class "fxregimes" and "confint.fxregimes"
 S3method("print", "fxregimes")
 S3method("refit", "fxregimes")
 S3method("coef", "fxregimes")
@@ -24,6 +25,10 @@ S3method("residuals", "fxregimes")
 S3method("lines", "fxregimes")
 S3method("index", "fxregimes")
 S3method("time", "fxregimes")
+S3method("confint", "fxregimes")
+S3method("breakdates", "confint.fxregimes")
+S3method("print", "confint.fxregimes")
+S3method("lines", "confint.fxregimes")
 
 ## methods for class "fxmonitor"
 S3method("print", "fxmonitor")
@@ -48,4 +53,3 @@ S3method("AIC", "gbreakpointsfull")
 
 S3method("plot", "summary.gbreakpointsfull")
 S3method("print", "summary.gbreakpointsfull")
-

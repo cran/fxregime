@@ -1,0 +1,44 @@
+citHeader("To cite fxregime in publications use")
+
+## R >= 2.8.0 passes package metadata to citation().
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("fxregime")
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+citEntry(entry = "Manual",
+         title = "fxregime: Exchange Rate Regime Analysis",
+         author = personList(as.person("Achim Zeileis"), 
+                             as.person("Ajay Shah"),
+			     as.person("Ila Patnaik")),
+         year         = year,
+         note         = note,
+	 url          = "http://CRAN.R-project.org/package=fxregime",
+	 
+         textVersion = 
+         paste("Achim Zeileis, Ajay Shah, Ila Patnaik",
+               sprintf("(%s).", year),
+               "fxregime: Exchange Rate Regime Analysis.",
+	       paste(note, ".", sep = ""),
+	       "URL http://CRAN.R-project.org/package=fxregime")
+)
+
+citEntry(entry="TechReport",
+         title = "Testing, Monitoring, and Dating Structural Changes in Maximum Likelihood Models",
+         author = personList(as.person("Achim Zeileis"), 
+	                     as.person("Ajay Shah"),
+                             as.person("Ila Patnaik")),
+         institution  = "Department of Statistics and Mathematics, Wirtschaftsuniversit\\\"at Wien, Research Report Series",
+         year         = "2008",
+	 type         = "Report",
+	 number       = "70",
+	 month        = "August",
+	 url          = "http://epub.wu-wien.ac.at/",
+         
+         textVersion = 
+         paste("Achim Zeileis, Ajay Shah, Ila Patnaik (2008).", 
+               "Testing, Monitoring, and Dating Structural Changes in Maximum Likelihood Models.",
+	       "Report 70.",
+	       "Department of Statistics and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series."),
+	 header = "For the underlying methods, please cite:"
+)
