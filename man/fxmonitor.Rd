@@ -57,7 +57,6 @@ which can also be queried by the \code{breakpoints} and \code{breakdates} method
 
 \value{
 An object of class \code{"fxmonitor"} which is a list including components:
-  \itemize
   \item{process}{the fitted empirical fluctuation process,}
   \item{n}{the number of observations in the history period,}
   \item{formula}{the formula used,}
