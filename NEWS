@@ -1,3 +1,14 @@
+Changes in Version 0.3-0
+
+  o Updated version of FXRatesCHF data: The data continues until
+    2009-08-14 (only 2008-01-04 in the previous version).
+    The column VEB was renamed to the new VEF to reflect that
+    Venezuela went from the old bolivar to the bolivar forte
+    (divided by 1000 due to inflation).    
+    
+  o The "CNY" vignette was updated/extended to the new data.
+
+
 Changes in Version 0.2-1
 
   o removed \itemize in .Rd files for new R-devel.

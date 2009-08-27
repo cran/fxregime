@@ -93,7 +93,7 @@ The returns can be extracted from \code{FXRatesCHF} and pre-processed via
 
 <<cny-data>>=
 cny <- fxreturns("CNY", frequency = "daily",
-  start = as.Date("2005-07-25"), end = as.Date("2007-12-31"),
+  start = as.Date("2005-07-25"), end = as.Date("2009-07-31"),
   other = c("USD", "JPY", "EUR", "GBP"), data = FXRatesCHF)
 @
 
@@ -145,7 +145,7 @@ sctest(cny_efp)
 
 The same fluctuation process can be continued in the monitoring period to check
 whether future observations still conform with the established model. Using a linear
-boundary, derived at 5\% significance level (for monitoring up to $T = 4$), this
+boundary, derived at 5\% significance level (for potentially monitoring up to $T = 4$), this
 can be performed via
 
 <<cny-monitoring, eval=FALSE>>=
@@ -280,9 +280,9 @@ USD in the currency basket slightly decreased.
 Shah A, Zeileis A, Patnaik I (2005).
 \newblock \enquote{What is the New Chinese Currency Regime?}
 \newblock \emph{Report~23}, Department of Statistics and Mathematics,
-  Wirtschaftsuniversit\"at Wien, Research Report Series.
+  WU Wirtschaftsuniversit\"at Wien, Research Report Series.
 \newblock
-  \urlprefix\url{http://epub.wu-wien.ac.at/}.
+  \urlprefix\url{http://epub.wu.ac.at/}.
 
 \bibitem[{Zeileis \emph{et~al.}(2008)Zeileis, Shah, and
   Patnaik}]{fxr:Zeileis+Shah+Patnaik:2008}
@@ -290,8 +290,8 @@ Zeileis A, Shah A, Patnaik I (2008).
 \newblock \enquote{Testing, Monitoring, and Dating Structural Changes
   in Maximum Likelihood Models.}
 \newblock \emph{Report~70}, Department of Statistics and Mathematics,
-  Wirtschaftsuniversit\"at Wien, Research Report Series.
-\newblock \urlprefix\url{http://epub.wu-wien.ac.at/}.
+  WU Wirtschaftsuniversit\"at Wien, Research Report Series.
+\newblock \urlprefix\url{http://epub.wu.ac.at/}.
 \end{thebibliography}
 
 \end{document}

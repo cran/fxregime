@@ -41,7 +41,8 @@ fxregimes(formula, data, \dots)
     in \code{\link{fxlm}}.}
   \item{data}{a \code{"zoo"} time series.}
   \item{\dots}{further arguments passed to \code{gbreakpoints} (currently unexported,
-    see below), most of the arguments are identical to \code{\link[strucchange]{breakpoints.formula}}}
+    see below), most of the arguments are identical to the \code{formula} method of
+    \code{\link[strucchange]{breakpoints}}}
 }
 
 \details{
@@ -52,9 +53,9 @@ are selected according to information criteria (by default LWZ, but BIC is also
 reported).
 
 The computing engine behind \code{fxregime} is \code{gbreakpoints} that generalizes
-various aspects about \code{\link[strucchange]{breakpoints.formula}}. Its interface
+various aspects about \code{\link[strucchange]{breakpoints}}. Its interface
 is not yet fixed, hence it is not exported in the namespace (and not documented).
-Most arguments are similar to those of \code{\link[strucchange]{breakpoints.formula}},
+Most arguments are similar to those of the \code{formula} method of \code{\link[strucchange]{breakpoints}},
 in particular the minimal segment size \code{h} and the maximal number of breaks
 \code{breaks}. To select the default information criterion the new argument
 \code{ic} can be set either to \code{"LWZ"} (the default) or \code{"BIC"}.

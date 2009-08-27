@@ -262,8 +262,8 @@ Zeileis A, Shah A, Patnaik I (2008).
 \newblock \enquote{Testing, Monitoring, and Dating Structural Changes
   in Maximum Likelihood Models.}
 \newblock \emph{Report~70}, Department of Statistics and Mathematics,
-  Wirtschaftsuniversit\"at Wien, Research Report Series.
-\newblock \urlprefix\url{http://epub.wu-wien.ac.at/}.
+  WU Wirtschaftsuniversit\"at Wien, Research Report Series.
+\newblock \urlprefix\url{http://epub.wu.ac.at/}.
 \end{thebibliography}
 
 \end{document}
