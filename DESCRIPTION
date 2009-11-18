@@ -1,6 +1,6 @@
 Package: fxregime
-Version: 0.3-0
-Date: 2009-08-27
+Version: 0.3-1
+Date: 2009-11-18
 Title: Exchange Rate Regime Analysis
 Author: Achim Zeileis, Ajay Shah, Ila Patnaik
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
@@ -13,6 +13,6 @@ Depends: R (>= 2.3.0), graphics, stats, zoo, sandwich, strucchange
 Suggests: lmtest, car
 Imports: graphics, stats, zoo, sandwich, strucchange, car
 License: GPL-2
-Packaged: 2009-08-27 15:57:39 UTC; zeileis
+Packaged: 2009-11-18 01:09:33 UTC; zeileis
 Repository: CRAN
-Date/Publication: 2009-08-27 17:08:20
+Date/Publication: 2009-11-18 01:27:19

@@ -18,7 +18,7 @@ fxreturns(x, other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCHF,
   \item{other}{character vector with column names of further currencies (to be
     used as regressors).}
   \item{data}{a \code{"zoo"} time series with FX rates (with respect to a base currency).}
-  \item{frequency}{character specifying wether weekly or daily returns should be computed.}
+  \item{frequency}{character specifying whether weekly or daily returns should be computed.}
   \item{start}{start time of the exchange rate series (before computing returns).}
   \item{end}{end time of the exchange rate series.}
   \item{na.action}{function for handling \code{NA}s.}

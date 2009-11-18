@@ -1,11 +1,11 @@
 \name{refit}
 \alias{refit}
 
-\title{Re-fitting Models}
+\title{Refitting Models}
 
 \description{
-Generic function for re-fitting a models on various subsets or
-re-weighted data sets.
+Generic function for refitting a models on various subsets or
+reweighted data sets.
 }
 
 \usage{
@@ -18,12 +18,12 @@ re-weighted data sets.
 }
 
 \details{
-  \code{refit} is a new generic function for re-fitting a certain
+  \code{refit} is a new generic function for refitting a certain
   model object on multiple versions of a data set (and is hence
   different from \code{update}). Applications are partitioned/segmented
-  models where the same type of model should be re-fitted on each
+  models where the same type of model should be refitted on each
   sub-sample or partition. See \code{\link[fxregime]{fxregimes}}
-  for such an example. Another application would be re-weighted
+  for such an example. Another application would be reweighted
   models such as in mixture models.
     
   The generic is similar to the one provided in \pkg{modeltools}

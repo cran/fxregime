@@ -1,4 +1,4 @@
-\name{fxregimes}
+\name{confint.fxregimes}
 \alias{confint.fxregimes}
 \alias{print.confint.fxregimes}
 \alias{breakddates.confint.fxregimes}
