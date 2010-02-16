@@ -4,8 +4,8 @@
 \title{Exchange Rates with CHF Unit Currency}
 
 \description{
-Foreign exchange rates for 24 currencies with respect to
-Swiss franks (CHF) from 1971-01-04 to 2007-06-07.
+Foreign exchange rates for 25 currencies with respect to
+Swiss franks (CHF) from 1971-01-04 to 2010-02-12.
 }
 
 \usage{
@@ -14,7 +14,7 @@ Swiss franks (CHF) from 1971-01-04 to 2007-06-07.
 
 \format{
 \code{FXRatesCHF} is a \code{"zoo"} series with \code{"Date"} time index
-containing 25 daily time series from 1971-01-04 to 2006-11-29. The columns
+containing 25 daily time series from 1971-01-04 to 2010-02-12. The columns
 correspond to the price currencies (in ISO 4217 format) with respect to CHF as
 the unit currency.
 }

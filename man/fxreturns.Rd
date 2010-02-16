@@ -43,11 +43,11 @@ A \code{"zoo"} with the returns of the specified currencies.
   Shah A., Zeileis A., Patnaik I. (2005), What is the New Chinese
   Currency Regime?, Report 23, Department of Statistics and Mathematics,
   Wirtschaftsuniversitaet Wien, Research Report Series, November 2005.
+  \url{http://epub.wu.ac.at}.
 
-  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
-  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
-  and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2008.
+  Zeileis A., Shah A., Patnaik I. (2010), Testing, Monitoring, and Dating Structural
+  Changes in Exchange Rate Regimes, \emph{Computational Statistics and Data Analysis},
+  Forthcoming. \url{http://dx.doi.org/10.1016/j.csda.2009.12.005}.
 }
 
 \seealso{\code{\link[fxregime]{fxlm}}, \code{\link[fxregime]{fxregimes}},

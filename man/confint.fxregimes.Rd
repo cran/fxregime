@@ -47,10 +47,9 @@ An object of class \code{"confint.fxregimes"}.
   Structural Changes in Practice, \emph{Computational Statistics and Data Analysis},
   \bold{44}, 109-123.
 
-  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
-  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
-  and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2008.
+  Zeileis A., Shah A., Patnaik I. (2010), Testing, Monitoring, and Dating Structural
+  Changes in Exchange Rate Regimes, \emph{Computational Statistics and Data Analysis},
+  Forthcoming. \url{http://dx.doi.org/10.1016/j.csda.2009.12.005}.
 }
 
 \seealso{\code{\link[fxregime]{fxregimes}}, \code{\link[fxregime]{refit}},

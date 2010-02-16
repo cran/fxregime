@@ -1,10 +1,10 @@
 ## partition FX models based on normal loglik
 ## (wrapper to the currently unexported gbreakpoints)
-fxregimes <- function(formula, data, ...) {
+fxregimes <- function(formula, data, ..., hpc = c("none", "foreach")) {
   if(missing(formula)) formula <- colnames(data)[1]
   if(is.character(formula)) formula <- as.formula(paste(formula,
     "~", paste(colnames(data)[colnames(data) != formula], collapse = " + ")))
-  rval <- gbreakpoints(formula, data = data, order.by = time(data), ...)
+  rval <- gbreakpoints(formula, data = data, order.by = time(data), hpc = hpc, ...)
   rval$formula <- formula
   rval$data <- data
   class(rval) <- c("fxregimes", class(rval))

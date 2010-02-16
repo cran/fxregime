@@ -33,7 +33,7 @@ Estimate changes/breaks between exchange rate regimes (based on exchange rate re
 }
 
 \usage{
-fxregimes(formula, data, \dots)
+fxregimes(formula, data, \dots, hpc = c("none", "foreach"))
 }
 
 \arguments{
@@ -43,6 +43,8 @@ fxregimes(formula, data, \dots)
   \item{\dots}{further arguments passed to \code{gbreakpoints} (currently unexported,
     see below), most of the arguments are identical to the \code{formula} method of
     \code{\link[strucchange]{breakpoints}}}
+  \item{hpc}{a character specifying the high performance computing support.
+    Default is \code{"none"}, can be set to \code{"foreach"}.}
 }
 
 \details{
@@ -66,6 +68,11 @@ A set of methods for useful generic functions is available, including \code{plot
 like their \code{"breakpoints"} counterparts. Querying information about the
 models on each segment is made particularly easy by providing a \code{\link[fxregime]{refit}}
 method that returns a list of \code{\link[fxregime]{fxlm}} objects.
+
+Optional support for high performance computing is available, currently using
+\code{\link[foreach]{foreach}} for the dynamic programming algorithm.
+If \code{hpc = "foreach"} is to be used, a parallel backend should be registered
+before. See \code{\link[foreach]{foreach}} for more information.
 }
 
 \value{
@@ -81,11 +88,11 @@ An object of class \code{"fxregimes"} inheriting from \code{"gbreakpointsfull"},
   Shah A., Zeileis A., Patnaik I. (2005), What is the New Chinese
   Currency Regime?, Report 23, Department of Statistics and Mathematics,
   Wirtschaftsuniversitaet Wien, Research Report Series, November 2005.
+  \url{http://epub.wu.ac.at}.
 
-  Zeileis A., Shah A., Patnaik I. (2008), Testing, Monitoring, and Dating Structural
-  Changes in Maximum Likelihood Models, Report 70, Department of Statistics
-  and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series,
-  August 2008.
+  Zeileis A., Shah A., Patnaik I. (2010), Testing, Monitoring, and Dating Structural
+  Changes in Exchange Rate Regimes, \emph{Computational Statistics and Data Analysis},
+  Forthcoming. \url{http://dx.doi.org/10.1016/j.csda.2009.12.005}.
 }
 
 \seealso{\code{\link[fxregime]{fxlm}}, \code{\link[fxregime]{fxregimes}},

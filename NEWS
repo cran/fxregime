@@ -1,3 +1,20 @@
+Changes in Version 1.0-0
+
+  o Release to accompany forthcoming publication of the methodology
+    in Computational Statistics & Data Analysis.
+    doi:10.1016/j.csda.2009.12.005
+
+  o Updated version of FXRatesCHF data: continued until 2010-02-12 
+    (previous version 2009-08-14).
+
+  o Added optional high performance computing support by means of the
+    "foreach" package for the fxregime() function. This can
+    be leveraged to alleviate the computational burden in the dynamic
+    programming approach. Simply register a parallel backend (e.g.,
+    by means of "doMC" or "doSNOW") and call fxregime() with
+    additional argument hpc = "foreach".
+    
+
 Changes in Version 0.3-1
 
   o enhanced documentation for new Rd parser.

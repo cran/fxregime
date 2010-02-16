@@ -132,7 +132,7 @@ sctest(inr_efp)
 @
 
 This $p$~value is not very small because there seem to be several changes in various parameters.
-A more suitable test in such a situation would be the Nyblom-Hansen test
+A more suitable test in such a situation would be the Nyblom--Hansen test
 
 <<inr-sctest2>>=
 sctest(inr_efp, functional = meanL2BB)

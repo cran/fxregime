@@ -2,7 +2,7 @@ nlogLik <- function(object, ...) -logLik(object, ...)
 
 gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
                          h = 0.15, breaks = NULL, order.by = NULL,
-			 ic = c("LWZ", "BIC"), ...)
+			 ic = c("LWZ", "BIC"), hpc = c("none", "foreach"), ...)
 {
   n <- NROW(data)
   k <- attr(objfun(fit(formula, data = data, ...)), "df")    
@@ -21,6 +21,12 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
   data <- data[ORDER(order.by), , drop = FALSE]
   order.by <- order.by[ORDER(order.by)]
 
+  hpc <- match.arg(hpc)
+  if(hpc == "foreach" && !require("foreach")) {
+    warning("High perfomance computing (hpc) support with 'foreach' package is not available, foreach is not installed.")
+    hpc <- "none"
+  }
+
   ## compute objfun() for all valid segmentes i, ..., j.
   
   #Z# for the default fit & objfun, this can be speeded up
@@ -28,7 +34,7 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
   #Z# in a double for-loop and becomes *really* slow
   if(missing(fit) & missing(objfun)) {    
     #Z# obtain RSS-based breakpoints
-    lm_bp <- breakpoints(formula, h = h, data = as.data.frame(data))
+    lm_bp <- breakpoints(formula, h = h, data = as.data.frame(data), hpc = hpc)
     
     RSS2obj.triang <- function(x) {
       rval <- x$RSS.triang
@@ -53,15 +59,22 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
 
   } else {
     #Z# this becomes *really* slow...
+    #Z# (but can be alleviated to some degree by hpc option)
     obj.triang <- list()
-    for(i in 1:(n-h+1)) {
-      obj_j <- rep(0, (n-i-h+2))
-      for(j in (i+h-1):n) {
-        obj_j[(j-i-h+2)] <- as.numeric(objfun(fit(formula, data = data[(i:j),,drop = FALSE], ...)))
+    if(hpc == "none") {
+      for(i in 1:(n-h+1)) {
+        obj_j <- rep(0, (n-i-h+2))
+        for(j in (i+h-1):n) obj_j[(j-i-h+2)] <- as.numeric(objfun(fit(formula, data = data[(i:j),,drop = FALSE], ...)))
+        obj.triang[[i]] <- obj_j
       }
-      obj.triang[[i]] <- obj_j
+    } else {
+      obj.triang <- foreach(i = 1:(n-h+1)) %dopar% {
+        obj_j <- rep(0, (n-i-h+2))
+        for(j in (i+h-1):n) obj_j[(j-i-h+2)] <- as.numeric(objfun(fit(formula, data = data[(i:j),,drop = FALSE], ...)))
+        obj_j
+      }
     }
-  }
+  }  
   #Z# For other special models (combinations of fit and objfun)
   #Z# it would be great to have external methods that generate
   #Z# something that can be easily transformed in an obj.triang

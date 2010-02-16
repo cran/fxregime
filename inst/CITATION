@@ -23,22 +23,21 @@ citEntry(entry = "Manual",
 	       "URL http://CRAN.R-project.org/package=fxregime")
 )
 
-citEntry(entry="TechReport",
-         title = "Testing, Monitoring, and Dating Structural Changes in Maximum Likelihood Models",
+citEntry(entry = "Article",
+         title = "Testing, Monitoring, and Dating Structural Changes in Exchange Rate Regimes",
          author = personList(as.person("Achim Zeileis"), 
 	                     as.person("Ajay Shah"),
                              as.person("Ila Patnaik")),
-         institution  = "Department of Statistics and Mathematics, WU Wirtschaftsuniversit\\\"at Wien, Research Report Series",
-         year         = "2008",
-	 type         = "Report",
-	 number       = "70",
-	 month        = "August",
-	 url          = "http://epub.wu.ac.at/",
+         journal      = "Computational Statistics \\& Data Analysis",
+         year         = "2010",
+	 note         = "Forthcoming",
+	 doi          = "10.1016/j.csda.2009.12.005",
          
          textVersion = 
-         paste("Achim Zeileis, Ajay Shah, Ila Patnaik (2008).", 
-               "Testing, Monitoring, and Dating Structural Changes in Maximum Likelihood Models.",
-	       "Report 70.",
-	       "Department of Statistics and Mathematics, Wirtschaftsuniversitaet Wien, Research Report Series."),
+         paste("Achim Zeileis, Ajay Shah, Ila Patnaik (2010).", 
+               "Testing, Monitoring, and Dating Structural Changes in Exchange Rate Regimes.",
+	       "Computational Statistics & Data Analysis, Forthcoming.",
+	       "doi:10.1016/j.csda.2009.12.005"),
+
 	 header = "For the underlying methods, please cite:"
 )
