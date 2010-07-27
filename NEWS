@@ -1,3 +1,9 @@
+Changes in Version 1.0-1
+
+  o Modified fxpegtest() to use linearHypothesis() instead of
+    linear.hypothesis() in case car 2.0-0 or greater is installed.
+
+
 Changes in Version 1.0-0
 
   o Release to accompany forthcoming publication of the methodology

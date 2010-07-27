@@ -40,7 +40,7 @@
 \begin{abstract}
   We investigate the Chinese exchange rate regime after China gave up
   on a fixed exchange rate to the US dollar in 2005. This reproduces
-  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2008}
+  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2010}
   initiated by \cite{fxr:Shah+Zeileis+Patnaik:2005}. Please refer
   to these papers for a more detailed discussion.
 \end{abstract}
@@ -87,7 +87,7 @@ away from a USD peg in the months after July 2005 \citep{fxr:Shah+Zeileis+Patnai
 To begin our investigation here, we follow up on our own analysis from autumn 2005: Using
 daily returns for the first three months after the announcement, we establish a stable exchange
 regression and monitor it in the subsequent months.
-The currencies considered by \cite{fxr:Zeileis+Shah+Patnaik:2008}
+The currencies considered by \cite{fxr:Zeileis+Shah+Patnaik:2010}
 are a basket of the most important floating currencies (USD, JPY, EUR, GBP).
 The returns can be extracted from \code{FXRatesCHF} and pre-processed via
 
@@ -246,23 +246,26 @@ lapply(cny_rf, summary)
 
 These results allow
 for several conclusions about the Chinese exchange rate regime after spring 2006: 
-CNY is still closely linked to USD. The exchange rate regime got much
+CNY was still closely linked to USD. The exchange rate regime got much
 more flexible increasing from $\sigma = \Sexpr{round(sqrt(tail(coef(cny_rf[[1]]), 1)), digits = 3)}$
 to $\Sexpr{round(sqrt(tail(coef(cny_rf[[2]]), 1)), digits = 3)}$ which is still very low, even
 compared with other pegged exchange rate regimes (see the results India
 in \code{vignette("INR", package = "fxregime")}). The intercept
-is clearly smaller than 0, reflecting a slow appreciation of the CNY
+was clearly smaller than 0, reflecting a slow appreciation of the CNY
 and thus signalling a modest liberation of the rigid USD peg in spring 2006.
+Towards the end of 2008, the modest liberation was abandoned again and since
+2009 the exchange rate regime is again an extremely tight USD peg without appreciation.
 
 
 \section{Summary} \label{sec:summary}
 
-For the Chinese yuan, a 2-segment model is found for the time after
+For the Chinese yuan, a 4-segment model is found for the time after
 July 2005 when China gave up on a fixed exchange rate to the
-USD. While being still closely linked to USD in both periods, there
-has been a small step in the direction of the claims of the Chinese
+USD. While being closely linked to USD in all periods, there
+had been small steps in the direction of the claims of the Chinese
 central bank: flexibility slightly increased while the weight of the
-USD in the currency basket slightly decreased.
+USD in the currency basket slightly decreased. However, these steps
+were reversed again towards the end of 2008.
 
 \begin{thebibliography}{2}
 \newcommand{\enquote}[1]{``#1''}
@@ -284,14 +287,13 @@ Shah A, Zeileis A, Patnaik I (2005).
 \newblock
   \urlprefix\url{http://epub.wu.ac.at/}.
 
-\bibitem[{Zeileis \emph{et~al.}(2008)Zeileis, Shah, and
-  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2008}
-Zeileis A, Shah A, Patnaik I (2008).
+\bibitem[{Zeileis \emph{et~al.}(2010)Zeileis, Shah, and
+  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2010}
+Zeileis A, Shah A, Patnaik I (2010).
 \newblock \enquote{Testing, Monitoring, and Dating Structural Changes
-  in Maximum Likelihood Models.}
-\newblock \emph{Report~70}, Department of Statistics and Mathematics,
-  WU Wirtschaftsuniversit\"at Wien, Research Report Series.
-\newblock \urlprefix\url{http://epub.wu.ac.at/}.
+  in Testing, Monitoring, and Dating Structural Changes in Exchange Rate Regimes.}
+\newblock \emph{Computational Statistics \& Data Analysis}, \textbf{54}(6), 1696--1706.
+\newblock \doi{10.1016/j.csda.2009.12.005}.
 \end{thebibliography}
 
 \end{document}

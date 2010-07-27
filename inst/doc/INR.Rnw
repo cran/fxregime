@@ -40,7 +40,7 @@
 \begin{abstract}
   We investigate the Indian exchange rate regime starting from 1993
   when trading in the Indian rupee began up to the end of 2007. This reproduces
-  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2008} which
+  the analysis from \cite{fxr:Zeileis+Shah+Patnaik:2010} which
   includes a more detailed discussion.
 \end{abstract}
 
@@ -256,14 +256,13 @@ basket peg in operation.
   \urlstyle{rm}\Url}\fi
 \providecommand{\eprint}[2][]{\url{#2}}
 
-\bibitem[{Zeileis \emph{et~al.}(2008)Zeileis, Shah, and
-  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2008}
-Zeileis A, Shah A, Patnaik I (2008).
+\bibitem[{Zeileis \emph{et~al.}(2010)Zeileis, Shah, and
+  Patnaik}]{fxr:Zeileis+Shah+Patnaik:2010}
+Zeileis A, Shah A, Patnaik I (2010).
 \newblock \enquote{Testing, Monitoring, and Dating Structural Changes
-  in Maximum Likelihood Models.}
-\newblock \emph{Report~70}, Department of Statistics and Mathematics,
-  WU Wirtschaftsuniversit\"at Wien, Research Report Series.
-\newblock \urlprefix\url{http://epub.wu.ac.at/}.
+  in Testing, Monitoring, and Dating Structural Changes in Exchange Rate Regimes.}
+\newblock \emph{Computational Statistics \& Data Analysis}, \textbf{54}(6), 1696--1706.
+\newblock \doi{10.1016/j.csda.2009.12.005}.
 \end{thebibliography}
 
 \end{document}

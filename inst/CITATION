@@ -30,13 +30,15 @@ citEntry(entry = "Article",
                              as.person("Ila Patnaik")),
          journal      = "Computational Statistics \\& Data Analysis",
          year         = "2010",
-	 note         = "Forthcoming",
+	 volume       = "54",
+	 number       = "6",
+	 pages        = "1696--1706",
 	 doi          = "10.1016/j.csda.2009.12.005",
          
          textVersion = 
          paste("Achim Zeileis, Ajay Shah, Ila Patnaik (2010).", 
                "Testing, Monitoring, and Dating Structural Changes in Exchange Rate Regimes.",
-	       "Computational Statistics & Data Analysis, Forthcoming.",
+	       "Computational Statistics & Data Analysis, 54(6), 1696-1706.",
 	       "doi:10.1016/j.csda.2009.12.005"),
 
 	 header = "For the underlying methods, please cite:"
