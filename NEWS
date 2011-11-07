@@ -1,3 +1,13 @@
+Changes in Version 1.0-2
+
+  o Fixed lines() method for "fxregimes" objects.
+
+  o Recompressed data sets in package to reduce file storage requirements.
+  
+  o Some technical changes for new R 2.14.0, e.g., adding Authors@R in
+    DESCRIPTION, recompressing data, etc.
+
+
 Changes in Version 1.0-1
 
   o Modified fxpegtest() to use linearHypothesis() instead of

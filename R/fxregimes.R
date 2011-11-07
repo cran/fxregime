@@ -23,8 +23,8 @@ print.fxregimes <- function(x, digits = max(3, getOption("digits") - 3), ...)
 
 index.fxregimes <- time.fxregimes <- function(x, ...) index(x$data)
 
-lines.fxregimes <- function(x, breaks = NULL, ...)
-  lines(breakdates(x, breaks = breaks), ...)
+lines.fxregimes <- function(x, breaks = NULL, lty = 2, ...)
+  abline(v = breakdates(x, breaks = breaks), lty = lty, ...)
 
 
 ## obtain FX models for each segment
