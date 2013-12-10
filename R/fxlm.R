@@ -64,8 +64,7 @@ bread.fxlm <- function(x, ...) {
 time.fxlm <- index.fxlm <- function(x, ...) x$index
 
 ## test linear hypotheses
-linear.hypothesis.fxlm <- function(model, ...) {
-  stopifnot(require("car"))
+linearHypothesis.fxlm <- function(model, ...) {
   class(model) <- class(model)[-1]
   NextMethod()
 }

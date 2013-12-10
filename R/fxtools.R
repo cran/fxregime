@@ -1,6 +1,4 @@
 fxpegtest <- function(model, peg = NULL, ...) {
-  stopifnot(require("car") & require("utils"))
-
   ## coefficients without intercept/variance
   cc <- coef(model)
   cc <- cc[-c(1, length(cc))]
@@ -14,13 +12,9 @@ fxpegtest <- function(model, peg = NULL, ...) {
   hyp[peg] <- 1
   hyp <- paste(names(hyp), hyp, sep = " = ")
   
-  ## call linear.hypothesis()/linearHypothesis()
+  ## call linearHypothesis()
   class(model) <- "lm"
-  rval <- if(compareVersion(packageDescription("car")$Version, "2.0-0") >= 0) {
-    linearHypothesis(model, hyp, ...)
-  } else {
-    linear.hypothesis(model, hyp, ...)
-  }
+  rval <- car::linearHypothesis(model, hyp, ...)
 
   ## output formatting
   ff <- as.character(formula(model))

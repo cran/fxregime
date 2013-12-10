@@ -15,14 +15,14 @@ Tools for exchange rate regime classification, currently under development.
   \item{model}{an object of class \code{"fxlm"} as returned by \code{\link[fxregime]{fxlm}}.}
   \item{peg}{character with the name of the currency the target currency is pegged to.
     By default this is chosen to be the currency with the maximal absolute coefficient.}
-  \item{\dots}{arguments passed to \code{\link[car]{linear.hypothesis}}.}
+  \item{\dots}{arguments passed to \code{\link[car]{linearHypothesis}}.}
 }
 
 \details{
 These tools should help to automate exchange rate regime classification.
 
 The first building block is the function \code{fxpegtest}, a simple convenience
-interface to \code{\link[car]{linear.hypothesis}}. It assess the null hypothesis
+interface to \code{\link[car]{linearHypothesis}}. It assess the null hypothesis
 that only the \code{peg} currency has coefficient \code{1} and all other 
 currencies have coefficient \code{0}.
 }
@@ -55,7 +55,7 @@ cny <- fxreturns("CNY", frequency = "daily",
 fm <- fxlm(CNY ~ USD + JPY + EUR + GBP, data = cny)
 
 ## check for plain USD peg:
-if(require("car")) fxpegtest(fm)
+fxpegtest(fm)
 ## no deviation from a plain USD peg
 }
 

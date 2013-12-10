@@ -1,3 +1,16 @@
+Changes in Version 1.0-3
+
+  o Depends/Imports has been streamlined. Only zoo and strucchange are
+    in Depends now. R (>= 2.14.0) is now required.
+
+  o The vignettes have been moved from inst/doc/ to vignettes/ in the
+    source package.
+    
+  o Only car::linearHypothesis() is employed in "fxregime" now. The old
+    car::linear.hypothesis() has been deprecated for a while and is now
+    not longer supported by fxpegtest().
+  
+
 Changes in Version 1.0-2
 
   o Fixed lines() method for "fxregimes" objects.
