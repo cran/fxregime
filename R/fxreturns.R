@@ -1,8 +1,10 @@
 ## extract returns needed from a price series (FXRatesCHF, by default)
 ## either at weekly or daily frequency
-fxreturns <- function(x, other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCHF,
+fxreturns <- function(x, other = c("USD", "JPY", "DUR", "GBP"), data = NULL,
   frequency = "weekly", start = NULL, end = NULL, na.action = na.locf, trim = FALSE)
 {
+  if(is.null(data)) data <- fxregime::FXRatesCHF
+
   ## select columns x and other
   if(is.character(x))         x <- which(colnames(data) %in% x)
   if(is.character(other)) other <- which(colnames(data) %in% other)
@@ -14,10 +16,11 @@ fxreturns <- function(x, other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCH
   ## keep daily or aggregate to weekly series (anchored on Fridays)
   freq <- match.arg(frequency, c("weekly", "daily"))
   if(freq == "weekly") {
-    ## convenience function
+    ## convenience functions
     nextfri <- function(date) 7 * ceiling(as.numeric(date - 1)/7) + as.Date(1)
+    mytail <- function(x) x[length(x)]
     ## aggregation (with special handling of NAs)
-    rval <- aggregate(rval, nextfri, function(z) if(all(is.na(z))) NA else tail(z[!is.na(z)], 1))  
+    rval <- aggregate(rval, nextfri, function(z) if(all(is.na(z))) NA else mytail(z[!is.na(z)]))
   }
 
   ## handle NAs

@@ -22,9 +22,13 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
   order.by <- order.by[ORDER(order.by)]
 
   hpc <- match.arg(hpc)
-  if(hpc == "foreach" && !require("foreach")) {
-    warning("High perfomance computing (hpc) support with 'foreach' package is not available, foreach is not installed.")
-    hpc <- "none"
+  if(hpc == "foreach") {
+    if(requireNamespace("foreach")) {
+      `%dopar%` <- foreach::`%dopar%`
+    } else {
+      warning("High perfomance computing (hpc) support with 'foreach' package is not available, foreach is not installed.")    
+      hpc <- "none"
+    }
   }
 
   ## compute objfun() for all valid segmentes i, ..., j.
@@ -44,11 +48,11 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
 
       rss2nloglik <- function(i) {
         rss <- rval[[i]]
-        ni <- seq(along = rss)
+        ni <- seq_along(rss)
         loglik <- 0.5 * ni * (log(rss) + 1 - log(ni) + log(2 * pi))
         loglik
       }
-      rval <- lapply(seq(along = rval), rss2nloglik)
+      rval <- lapply(seq_along(rval), rss2nloglik)
       rval <- lapply(rval, function(x) x[-(1:h)])
 
       return(rval)
@@ -68,7 +72,7 @@ gbreakpoints <- function(formula, data, fit = lm, objfun = nlogLik,
         obj.triang[[i]] <- obj_j
       }
     } else {
-      obj.triang <- foreach(i = 1:(n-h+1)) %dopar% {
+      obj.triang <- foreach::foreach(i = 1:(n-h+1)) %dopar% {
         obj_j <- rep(0, (n-i-h+2))
         for(j in (i+h-1):n) obj_j[(j-i-h+2)] <- as.numeric(objfun(fit(formula, data = data[(i:j),,drop = FALSE], ...)))
         obj_j

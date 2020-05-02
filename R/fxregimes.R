@@ -39,8 +39,7 @@ refit.fxregimes <- function(object, breaks = NULL, ...) {
     sbp <- start(object$data)
     ebp <- end(object$data)
   } else {  
-    sbp <- c(start(object$data), sapply(breaks, function(z)
-      index(object$data)[min(which(index(object$data) > z))]))
+    sbp <- c(start(object$data), index(object$data)[sapply(breaks, function(z) min(which(index(object$data) > z)))])
     ebp <- c(breaks, end(object$data))
   }
   

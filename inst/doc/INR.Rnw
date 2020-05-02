@@ -1,8 +1,16 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage{amsfonts,amstext,amsmath}
 \usepackage[authoryear,round,longnamesfirst]{natbib}
-\usepackage{graphicx,a4wide,color,ae,fancyvrb,thumbpdf}
+\usepackage{graphicx,a4,ae,color,fancyvrb}
 \usepackage{hyperref}
+
+\oddsidemargin 0.1 in
+\evensidemargin 0.15 in
+\marginparwidth 1 in
+\oddsidemargin 0.125 in
+\evensidemargin 0.125 in
+\marginparwidth 0.75 in
+\textwidth 6.125 in
 
 %% instead of \usepackage{Sweave}
 \usepackage[T1]{fontenc}

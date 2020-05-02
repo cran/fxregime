@@ -13,14 +13,14 @@ citEntry(entry = "Manual",
 			     as.person("Ila Patnaik")),
          year         = year,
          note         = note,
-	 url          = "http://CRAN.R-project.org/package=fxregime",
+	 url          = "https://CRAN.R-project.org/package=fxregime",
 	 
          textVersion = 
          paste("Achim Zeileis, Ajay Shah, Ila Patnaik",
                sprintf("(%s).", year),
                "fxregime: Exchange Rate Regime Analysis.",
 	       paste(note, ".", sep = ""),
-	       "URL http://CRAN.R-project.org/package=fxregime")
+	       "URL https://CRAN.R-project.org/package=fxregime")
 )
 
 citEntry(entry = "Article",

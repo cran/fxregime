@@ -9,7 +9,7 @@ from a multivariate series of exchange rates.
 }
 
 \usage{
-fxreturns(x, other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCHF,
+fxreturns(x, other = c("USD", "JPY", "DUR", "GBP"), data = NULL,
   frequency = "weekly", start = NULL, end = NULL, na.action = na.locf, trim = FALSE)
 }
 
@@ -17,7 +17,8 @@ fxreturns(x, other = c("USD", "JPY", "DUR", "GBP"), data = FXRatesCHF,
   \item{x}{character with column name of selected target currency.}
   \item{other}{character vector with column names of further currencies (to be
     used as regressors).}
-  \item{data}{a \code{"zoo"} time series with FX rates (with respect to a base currency).}
+  \item{data}{a \code{"zoo"} time series with FX rates (with respect to a base currency).
+    By default \code{\link[fxregime]{FXRatesCHF}} is used.}
   \item{frequency}{character specifying whether weekly or daily returns should be computed.}
   \item{start}{start time of the exchange rate series (before computing returns).}
   \item{end}{end time of the exchange rate series.}

@@ -1,3 +1,11 @@
+Changes in Version 1.0-4
+
+  o Improvement in refit.fxregimes() that works in both R >= 4.0.0 and
+    also R < 4.0.0.
+    
+  o Small improvements for R CMD check.
+
+
 Changes in Version 1.0-3
 
   o Depends/Imports has been streamlined. Only zoo and strucchange are
